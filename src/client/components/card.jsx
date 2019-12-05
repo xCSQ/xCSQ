@@ -57,8 +57,8 @@ Add Question
         <Draggable style={{ marginLeft: 'auto', marginRight: 'auto' }} id={this.props.id}>
           <div
             style={{
-              // color: 'blue',
-              // margin: '10px',
+            // color: 'blue',
+            // margin: '10px',
               width: '140px',
               height: 'auto',
               border: '5px light black',

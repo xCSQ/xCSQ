@@ -6,6 +6,7 @@ import * as actions from '../actions/actions';
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchNewCard: () => dispatch(actions.newCardActionCreator()),
+  dispatchNewColumn: () => dispatch(actions.newColumnActionCreator()),
 });
 
 const mapStateToProps = (state) => ({
@@ -46,6 +47,15 @@ class Board extends Component {
           }}
         >
           {displayColumn}
+          <button
+            type="button"
+            style={{
+              fontWeight: 'bold', fontSize: '16px', width: '100px', borderRadius: '4px', backgroundColor: '#FBC638', color: '',
+            }}
+            onClick={() => this.props.dispatchNewColumn()}
+          >
+          add comp
+          </button>
         </div>
       </div>
     );

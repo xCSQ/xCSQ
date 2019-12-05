@@ -28,12 +28,11 @@ class Column extends Component {
 
   render() {
     const relevantCards = [];
-    // ID IS COLUMN NAME, COLUMN NAME WITHIN PROPS IS ASSOCIATED WITH THE ARRAY OF CARD OBJECTS
+    // to render question cards in questions column
     const arrayInState = this.props[this.props.id];
-    // ARRAYINSTATE = ARRAY OF CARDS
 
     for (let i = 0; i < arrayInState.length; i += 1) {
-      console.log(`Array is state is ${arrayInState[i]}`);
+      //console.log(`Array is state is ${arrayInState[i]}`);
       relevantCards.push(<Card input={arrayInState[i]} inArray key={`arrayCard${i}`} />);
       // console.log(`job object ${relevantCards[i].jobObject}`);
     }

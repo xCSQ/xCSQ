@@ -4,6 +4,10 @@ export const newCardActionCreator = () => ({
   type: types.NEW_CARD,
 });
 
+export const newColumnActionCreator = () => ({
+  type: types.NEW_COLUMN,
+});
+
 // changed payload below to reflect user input for question
 
 export const submitInfoActionCreator = (question) => ({

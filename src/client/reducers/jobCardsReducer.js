@@ -6,6 +6,7 @@ const initialState = {
   question: [],
   newCard: false,
   columns: ['Common Questions'],
+  companies: {},
 };
 
 // jobCardsReducer is now questionCardsReducer
@@ -33,7 +34,6 @@ const questionCardsReducer = (state = initialState, action) => {
         question: action.payload.question,
         editable: false,
       };
-
       stateCopy.question.unshift(submittedCard);
       stateCopy.newCard = false;
 
