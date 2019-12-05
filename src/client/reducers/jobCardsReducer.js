@@ -1,27 +1,25 @@
 import * as types from '../constants/actionTypes';
+
 const fetch = require('node-fetch');
 
 const initialState = {
-  interested: [],
-  applied: [],
-  phone: [],
-  onsite: [],
-  offer: [],
-  accepted: [],
+  question: [],
   newCard: false,
-  columns: ['Interested', 'Applied', 'Phone Screen', 'Onsite', 'Offer'],
+  columns: ['Common Questions'],
 };
 
-const jobCardsReducer = (state = initialState, action) => {
+// jobCardsReducer is now questionCardsReducer
+
+const questionCardsReducer = (state = initialState, action) => {
   let submittedCard;
   const stateCopy = { ...state };
   switch (action.type) {
     case types.POPULATE_DOM:
-      stateCopy.interested = action.payload;
+      stateCopy.question = action.payload;
 
       return {
         ...state,
-        interested: stateCopy.interested,
+        question: stateCopy.question,
       };
     case types.NEW_CARD:
       stateCopy.newCard = true;
@@ -31,30 +29,29 @@ const jobCardsReducer = (state = initialState, action) => {
       };
     case types.SUBMIT_INFO:
       submittedCard = {
-        company: action.payload.company,
-        role: action.payload.role,
-        link: action.payload.link,
+        // removed company and swaped for question
+        question: action.payload.question,
         editable: false,
       };
 
-      stateCopy.interested.unshift(submittedCard);
+      stateCopy.question.unshift(submittedCard);
       stateCopy.newCard = false;
 
       fetch('/', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(submittedCard),
       })
         .catch((err) => {
-          if (err) new Error;
+          if (err) new Error();
         });
 
       return {
         ...state,
         newCard: stateCopy.newCard,
-        interested: stateCopy.interested,
+        question: stateCopy.question,
       };
 
 
@@ -63,4 +60,4 @@ const jobCardsReducer = (state = initialState, action) => {
   }
 };
 
-export default jobCardsReducer;
+export default questionCardsReducer;

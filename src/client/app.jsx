@@ -16,7 +16,10 @@ class App extends Component {
   componentDidMount() {
     fetch('/data')
       .then((data) => data.json())
-      .then((parsedBlob) => this.props.populateDom(parsedBlob));
+      .then((result) => {
+        const resultsArray = result.map((questionObject) => questionObject.questions);
+        this.props.populateDom(resultsArray);
+      });
   }
 
   render() {
@@ -26,10 +29,10 @@ class App extends Component {
           display: 'flex', alignItems: 'center',
         }}
         >
-          <img src="https://files.slack.com/files-pri/TMSRC4ZKL-FR98E54UC/image.png" alt="logo" style={{ height: '50px' }} />
+          <img src="https://s.yimg.com/ny/api/res/1.2/018oi5u9bdiI8oOlTsQjNw--~A/YXBwaWQ9aGlnaGxhbmRlcjtzbT0xO3c9ODAw/https://media-mbst-pub-ue1.s3.amazonaws.com/creatr-uploaded-images/2019-12/50e43df0-160e-11ea-abfb-33475d56001d" alt="logo" style={{ height: '50px' }} />
           <h2 style={{ margin: '0px 0px 0px 20px', fontSize: '34px' }}>
-            Octopodes
-            <span style={{ marginLeft: '10px', fontSize: '20px' }}> scrum board for your interview tracking</span>
+            CSQ
+            <span style={{ marginLeft: '10px', fontSize: '20px' }}> a study guide for common interview questions</span>
           </h2>
         </div>
         <hr style={{ marginTop: '10px', width: '500px', marginInlineStart: '85px' }} />

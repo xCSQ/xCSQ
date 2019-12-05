@@ -10,17 +10,18 @@ class Card extends Component {
     };
   }
 
-  // const dragStart = (e) => {
-  //  const target = e.target
-  //  e.dataTransfer.setData('data', e.target.id)
-  // }
+  // changed values of input fields on cards
+  // removed link
+  // switched role to question
+  // changed columns id
+  // deleted company
 
   render() {
     const style = {
       backgroundColor: 'blue',
     };
 
-    if (this.props.newCard && this.props.columnID === 'interested') {
+    if (this.props.newCard && this.props.columnID === 'question') {
       return (
 
         <div id="card">
@@ -36,23 +37,22 @@ class Card extends Component {
               textAlign: 'center',
             }}
           >
-            <input id="company" type="text" placeholder="Company" />
-            <br />
-            <input id="role" type="text" placeholder="Role" />
-            <br />
-            <input id="link" type="text" placeholder="Link" />
+            <input id="question" type="text" placeholder="Question" />
             <br />
             <button
               type="button"
-              onClick={() => this.props.dispatchSubmitInfo(document.getElementById('company').value, document.getElementById('role').value, document.getElementById('link').value)}
+              onClick={() => this.props.dispatchSubmitInfo(
+                document.getElementById('question').value,
+              )}
             >
-Add Info
+Add Question
 
             </button>
           </form>
         </div>
       );
     } if (this.props.inArray) {
+      // console.log(`***************************${this.props.inArray}`)
       return (
         <Draggable style={{ marginLeft: 'auto', marginRight: 'auto' }} id={this.props.id}>
           <div
@@ -71,13 +71,8 @@ Add Info
 
             className="hard card"
           >
-            <label>Company: </label>
-            <span>{this.props.jobObject.company}</span>
-            <br />
-            <label>Role: </label>
-            <span>{this.props.jobObject.role}</span>
-            <br />
-            <span><a href={`https://${this.props.jobObject.link}`} target="_blank">{this.props.jobObject.link}</a></span>
+            <label>Question: </label>
+            <span>{this.props.input}</span>
           </div>
         </Draggable>
       );

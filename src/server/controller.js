@@ -1,31 +1,35 @@
 const db = require('./model');
 
-const jobController = {};
+// jobcontroller - is now questioncontroller
+// incomingJob is now incoming question
+// jobInsertionQuery is now questionInsertionQuery
+const questionController = {};
 
-jobController.getData = (req, res, next) => {
-  const getDataQuery = 'SELECT * FROM jobs;'
+questionController.getData = (req, res, next) => {
+  const getDataQuery = 'SELECT * FROM common_questions;';
   db.query(getDataQuery)
     .then((queryRes) => {
     //   console.log(queryRes);
       res.locals.data = queryRes.rows;
-    //   console.log(res.locals.data);
+      //   console.log(res.locals.data);
       return next();
     });
 };
 
 
-jobController.addJob = (req, res, next) => {
-  const incomingJob = req.body;
+questionController.addQuestion = (req, res, next) => {
+  const incomingQuestion = req.body;
   // console.log(incomingJob);
-  const jobInsertionQuery = `INSERT INTO jobs (company, role, link) VALUES ('${incomingJob.company}', '${incomingJob.role}', '${incomingJob.link}')
+  // changed line below from company to question and deleted role and link
+  const questionInsertionQuery = `INSERT INTO common_questions (questions) VALUES ('${incomingQuestion.question}')
     RETURNING *;`;
   // console.log(jobInsertionQuery);
-  db.query(jobInsertionQuery)
-    .then(queryRes => {
-      res.locals.jobInsertionInfo = queryRes.rows[0];
+  db.query(questionInsertionQuery)
+    .then((queryRes) => {
+      res.locals.questionInsertionInfo = queryRes.rows[0];
       next();
     })
     .catch((err) => res.status(500).json({ error: err.message }));
 };
 
-module.exports = jobController;
+module.exports = questionController;
