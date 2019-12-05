@@ -4,19 +4,18 @@ import Card from './card.jsx';
 import * as actions from '../actions/actions';
 import Droppable from './dnd/Droppable';
 
+// switched interested to question
 const mapStateToProps = (state) => ({
   newCard: state.jobCards.newCard,
-  interested: state.jobCards.interested,
-  applied: state.jobCards.applied,
-  phone: state.jobCards.phone,
-  onsite: state.jobCards.onsite,
-  offer: state.jobCards.offer,
-  accepted: state.jobCards.accepted,
+  question: state.jobCards.question,
 });
 
-//GIVE CARD ABILITY TO SUBMIT ITSELF
+// GIVE CARD ABILITY TO SUBMIT ITSELF
+// switched role and link out for question from dispatch
+// removed company from dispatch
+
 const mapDispatchToProps = (dispatch) => ({
-  dispatchSubmitInfo: (company, role, link) => dispatch(actions.submitInfoActionCreator(company, role, link)),
+  dispatchSubmitInfo: (question) => dispatch(actions.submitInfoActionCreator(question)),
 });
 
 class Column extends Component {
@@ -29,11 +28,13 @@ class Column extends Component {
 
   render() {
     const relevantCards = [];
-    //ID IS COLUMN NAME, COLUMN NAME WITHIN PROPS IS ASSOCIATED WITH THE ARRAY OF CARD OBJECTS
+    // to render question cards in questions column
     const arrayInState = this.props[this.props.id];
-    //ARRAYINSTATE = ARRAY OF CARDS
+
     for (let i = 0; i < arrayInState.length; i += 1) {
-      relevantCards.push(<Card jobObject={arrayInState[i]} inArray key={`arrayCard${i}`} />);
+      //console.log(`Array is state is ${arrayInState[i]}`);
+      relevantCards.push(<Card input={arrayInState[i]} inArray key={`arrayCard${i}`} />);
+      // console.log(`job object ${relevantCards[i].jobObject}`);
     }
     return (
       <Droppable>

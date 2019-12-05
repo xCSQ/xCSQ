@@ -8,7 +8,7 @@ const initialData = {
   columns: {
     'column-1': {
       id: 'column-1',
-      title: 'Interested',
+      title: 'Questions',
       taskIds: ['company-1', 'company-2','company-3','company-4'],
     },
   },
