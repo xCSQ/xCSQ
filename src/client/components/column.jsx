@@ -8,6 +8,7 @@ import Droppable from './dnd/Droppable';
 const mapStateToProps = (state) => ({
   newCard: state.jobCards.newCard,
   question: state.jobCards.question,
+  companies: state.jobCards.companies
 });
 
 // GIVE CARD ABILITY TO SUBMIT ITSELF
@@ -29,12 +30,15 @@ class Column extends Component {
   render() {
     const relevantCards = [];
     // to render question cards in questions column
-    const arrayInState = this.props[this.props.id];
-
-    for (let i = 0; i < arrayInState.length; i += 1) {
-      //console.log(`Array is state is ${arrayInState[i]}`);
-      relevantCards.push(<Card input={arrayInState[i]} inArray key={`arrayCard${i}`} />);
-      // console.log(`job object ${relevantCards[i].jobObject}`);
+    let arrayInState;
+    if(this.props.id === 'question')
+      arrayInState = this.props[this.props.id];
+    else {
+       arrayInState = this.props.companies[this.props.id];
+    }
+    console.log('this.props:', this.props)
+      for (let i = 0; i < arrayInState.length; i += 1) {
+        relevantCards.push(<Card input={arrayInState[i]} inArray key={`card${i}`} />);
     }
     return (
       <Droppable>
@@ -54,7 +58,7 @@ class Column extends Component {
           }}
         >
           <h2 style={{ textAlign: 'center' }}>
-            {this.props.column}
+            {this.props.columnName} 
           </h2>
           <Card newCard={this.props.newCard} dispatchSubmitInfo={this.props.dispatchSubmitInfo} columnID={this.props.id} />
           <div style={{ }}>

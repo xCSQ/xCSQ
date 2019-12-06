@@ -54,6 +54,31 @@ const questionCardsReducer = (state = initialState, action) => {
         question: stateCopy.question,
       };
 
+      case types.NEW_COLUMN:
+        let newState = {...state};
+        newState.columns.push(action.payload);
+        newState.companies[action.payload] =[];
+
+      fetch('/data/company/'+action.payload)
+        .catch((err) => {
+          if (err) new Error();
+        });
+      return {...state, 
+               columns:newState.columns, 
+               companies:newState.companies 
+              };
+
+        case types.INITIAL_COLUMNS:
+        let newState2 = {...state};
+        newState2.columns.push(action.payload);
+        newState2.companies[action.payload] =[];
+
+      return {...state, 
+               columns:newState2.columns, 
+               companies:newState2.companies 
+              };
+
+        
 
     default:
       return state;
