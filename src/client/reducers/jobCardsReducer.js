@@ -72,12 +72,14 @@ const questionCardsReducer = (state = initialState, action) => {
         let newState2 = {...state};
         newState2.columns.push(action.payload);
         newState2.companies[action.payload] =[];
-
+              
       return {...state, 
                columns:newState2.columns, 
                companies:newState2.companies 
               };
-
+      case types.SET_COMPANIES_QUESTIONS:
+          stateCopy.companies = action.payload
+          return {...state, companies:stateCopy.companies};
         
 
     default:

@@ -9,6 +9,8 @@ const mapDispatchToProps = (dispatch) => ({
   dispatchNewColumn: (company) => dispatch(actions.newColumnActionCreator(company)),
 
   dispatchGetColumns: (company) => dispatch(actions.initializeColumns(company)),
+
+  dispatchGetCompaniesQuestions: (companyQuestionObject) => dispatch(actions.getCompaniesQuestions(companyQuestionObject))
 });
 
 const mapStateToProps = (state) => ({
@@ -25,12 +27,19 @@ class Board extends Component {
     this.addCompany = this.addCompany.bind(this)
   }
   componentDidMount(){
-    fetch('/data/names').then(data => data.json()).then(result =>
-      { for(let i=0; i<result.length; i++)
-        this.props.dispatchGetColumns(result[i])
-        this.setState({change:false})
-      })
-
+    let newThis=this;
+    const promise = new Promise (function(resolve,reject){
+      fetch('/data/names').then(data => data.json()).then(result =>{ 
+        for(let i=0; i<result.companies.length; i++){
+          newThis.props.dispatchGetColumns(result.companies[i])
+        } 
+        newThis.setState({change:false})
+        const promise2 = new Promise(function(resolve, reject){
+            newThis.props.dispatchGetCompaniesQuestions(result.companiesQuestions)
+            newThis.setState({change:false})
+        })
+    })
+    })
   }
   addCompany(){
     let companyName= document.querySelector('#newComp').value.toUpperCase()

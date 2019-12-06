@@ -9,6 +9,10 @@ export const newColumnActionCreator = (company) => ({
   payload: company
 });
 
+export const getCompaniesQuestions = (companyQuestionObject) => ({
+  type: types.SET_COMPANIES_QUESTIONS,
+  payload: companyQuestionObject
+})
 // changed payload below to reflect user input for question
 
 export const submitInfoActionCreator = (question) => ({
