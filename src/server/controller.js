@@ -16,6 +16,31 @@ questionController.getData = (req, res, next) => {
     });
 };
 
+questionController.addCompany = (req, res, next) => {
+  const {names} = req.params;
+  console.log('names:', names)
+
+  const setCompanyQuery = `INSERT INTO companies (names) VALUES ('${names}');`;
+  console.log('  setCompanyQuery:',   setCompanyQuery)
+  db.query(setCompanyQuery, (err, result)=>{
+    if(err) return next(err);
+    return next();
+  }); 
+};
+questionController.getCompanies = (req, res, next) => {
+
+  const getCompanies = 'SELECT * FROM companies';
+
+  db.query(getCompanies, (err, result)=>{
+    if(err) return next(err);
+    res.locals.companies= [];
+    for(let i=0; i<result.rows.length; i++){
+      res.locals.companies.push(result.rows[i].names)
+    }
+    console.log('result:', res.locals.companies)
+    return next();
+  }); 
+};
 
 questionController.addQuestion = (req, res, next) => {
   const incomingQuestion = req.body;
