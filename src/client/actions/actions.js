@@ -1,31 +1,21 @@
 import * as types from '../constants/actionTypes';
 
 export const newCardActionCreator = () => ({
-  type: types.NEW_CARD,
+  type: types.NEW_CARD
 });
 
-export const newColumnActionCreator = (company) => ({
-  type: types.NEW_COLUMN,
-  payload: company
-});
-
-// changed payload below to reflect user input for question
-
-export const submitInfoActionCreator = (question) => ({
-  type: types.SUBMIT_INFO,
-  payload: {
-    question,
-  },
+export const submitInfoActionCreator = (company, role, link) => ({
+    type: types.SUBMIT_INFO,
+    payload: {
+        company,
+        role,
+        link
+    }
 });
 
 export const populateDomActionCreator = (array) => ({
   type: types.POPULATE_DOM,
   payload: array,
-});
-
-export const initializeColumns = (company) => ({
-  type: types.INITIAL_COLUMNS,
-  payload: company
 });
 
 // export const editInfoActionCreator = () => ({

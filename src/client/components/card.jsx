@@ -10,18 +10,17 @@ class Card extends Component {
     };
   }
 
-  // changed values of input fields on cards
-  // removed link
-  // switched role to question
-  // changed columns id
-  // deleted company
+  // const dragStart = (e) => {
+  //  const target = e.target
+  //  e.dataTransfer.setData('data', e.target.id)
+  // }
 
   render() {
     const style = {
       backgroundColor: 'blue',
     };
 
-    if (this.props.newCard && this.props.columnID === 'question') {
+    if (this.props.newCard && this.props.columnID === 'interested') {
       return (
 
         <div id="card">
@@ -37,28 +36,29 @@ class Card extends Component {
               textAlign: 'center',
             }}
           >
-            <input id="question" type="text" placeholder="Question" />
+            <input id="company" type="text" placeholder="Company" />
+            <br />
+            <input id="role" type="text" placeholder="Role" />
+            <br />
+            <input id="link" type="text" placeholder="Link" />
             <br />
             <button
               type="button"
-              onClick={() => this.props.dispatchSubmitInfo(
-                document.getElementById('question').value,
-              )}
+              onClick={() => this.props.dispatchSubmitInfo(document.getElementById('company').value, document.getElementById('role').value, document.getElementById('link').value)}
             >
-Add Question
+Add Info
 
             </button>
           </form>
         </div>
       );
     } if (this.props.inArray) {
-      // console.log(`***************************${this.props.inArray}`)
       return (
         <Draggable style={{ marginLeft: 'auto', marginRight: 'auto' }} id={this.props.id}>
           <div
             style={{
-            // color: 'blue',
-            // margin: '10px',
+              // color: 'blue',
+              // margin: '10px',
               width: '140px',
               height: 'auto',
               border: '5px light black',
@@ -71,8 +71,13 @@ Add Question
 
             className="hard card"
           >
-            <label>Question: </label>
-            <span>{this.props.input}</span>
+            <label>Company: </label>
+            <span>{this.props.jobObject.company}</span>
+            <br />
+            <label>Role: </label>
+            <span>{this.props.jobObject.role}</span>
+            <br />
+            <span><a href={`https://${this.props.jobObject.link}`} target="_blank">{this.props.jobObject.link}</a></span>
           </div>
         </Draggable>
       );

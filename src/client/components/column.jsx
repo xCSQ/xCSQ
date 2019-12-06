@@ -4,19 +4,19 @@ import Card from './card.jsx';
 import * as actions from '../actions/actions';
 import Droppable from './dnd/Droppable';
 
-// switched interested to question
 const mapStateToProps = (state) => ({
   newCard: state.jobCards.newCard,
-  question: state.jobCards.question,
-  companies: state.jobCards.companies
+  interested: state.jobCards.interested,
+  applied: state.jobCards.applied,
+  phone: state.jobCards.phone,
+  onsite: state.jobCards.onsite,
+  offer: state.jobCards.offer,
+  accepted: state.jobCards.accepted,
 });
 
-// GIVE CARD ABILITY TO SUBMIT ITSELF
-// switched role and link out for question from dispatch
-// removed company from dispatch
-
+//GIVE CARD ABILITY TO SUBMIT ITSELF
 const mapDispatchToProps = (dispatch) => ({
-  dispatchSubmitInfo: (question) => dispatch(actions.submitInfoActionCreator(question)),
+  dispatchSubmitInfo: (company, role, link) => dispatch(actions.submitInfoActionCreator(company, role, link)),
 });
 
 class Column extends Component {
@@ -29,16 +29,11 @@ class Column extends Component {
 
   render() {
     const relevantCards = [];
-    // to render question cards in questions column
-    let arrayInState;
-    if(this.props.id === 'question')
-      arrayInState = this.props[this.props.id];
-    else {
-       arrayInState = this.props.companies[this.props.id];
-    }
-    console.log('this.props:', this.props)
-      for (let i = 0; i < arrayInState.length; i += 1) {
-        relevantCards.push(<Card input={arrayInState[i]} inArray key={`card${i}`} />);
+    //ID IS COLUMN NAME, COLUMN NAME WITHIN PROPS IS ASSOCIATED WITH THE ARRAY OF CARD OBJECTS
+    const arrayInState = this.props[this.props.id];
+    //ARRAYINSTATE = ARRAY OF CARDS
+    for (let i = 0; i < arrayInState.length; i += 1) {
+      relevantCards.push(<Card jobObject={arrayInState[i]} inArray key={`arrayCard${i}`} />);
     }
     return (
       <Droppable>
@@ -58,7 +53,7 @@ class Column extends Component {
           }}
         >
           <h2 style={{ textAlign: 'center' }}>
-            {this.props.columnName} 
+            {this.props.column}
           </h2>
           <Card newCard={this.props.newCard} dispatchSubmitInfo={this.props.dispatchSubmitInfo} columnID={this.props.id} />
           <div style={{ }}>
