@@ -4,11 +4,27 @@ const app = express();
 const path = require('path');
 const bodyparser = require('body-parser');
 const controller = require('./controller');
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
 
 const PORT = 3000;
 
-app.use(express.static('dist'));
+app.use('/dist/', express.static('dist'));
 app.use(bodyparser.json());
+
+app.get('/', (req, res) => {
+  res.status(200).sendFile(path.resolve(__dirname, '../../index.html'))
+} )
+
+io.on('connection', function(socket){
+  socket.on('chat message', function(msg){
+    io.emit('chat message', msg);
+
+  });
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
+});
 
 app.get('/data/company/:names', controller.addCompany, (req,res)=>{
   res.status(200).json("company added")
@@ -32,4 +48,4 @@ app.post('/', controller.addQuestion, (req, res) => {
 
 app.use('*', (req, res) => res.send('Server is live'));
 
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+http.listen(PORT, () => console.log("HTTP IS LISTENING ON 3000"));

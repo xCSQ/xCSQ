@@ -8,7 +8,7 @@ module.exports = {
   },
   mode: process.env.NODE_ENV,
   devServer: {
-    publicPath: '/',
+    publicPath: '/dist/',
     proxy: {
       // context: () => true,
       '*': 'http://localhost:3000',
