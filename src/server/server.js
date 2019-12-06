@@ -29,8 +29,8 @@ io.on('connection', function(socket){
 app.get('/data/company/:names', controller.addCompany, (req,res)=>{
   res.status(200).json("company added")
 });
-app.get('/data/names', controller.getCompanies, (req,res)=>{
-  res.status(200).json(res.locals.companies)
+app.get('/data/names', controller.getCompanies, controller.getCompaniesQuestions,(req,res)=>{
+  res.status(200).json({companies:res.locals.companies,companiesQuestions:res.locals.companiesQuestions})
 });
 
 app.get('/data', controller.getData, (req, res) => {

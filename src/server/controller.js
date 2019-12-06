@@ -18,10 +18,8 @@ questionController.getData = (req, res, next) => {
 
 questionController.addCompany = (req, res, next) => {
   const {names} = req.params;
-  console.log('names:', names)
-
   const setCompanyQuery = `INSERT INTO companies (names) VALUES ('${names}');`;
-  console.log('  setCompanyQuery:',   setCompanyQuery)
+
   db.query(setCompanyQuery, (err, result)=>{
     if(err) return next(err);
     return next();
@@ -37,7 +35,27 @@ questionController.getCompanies = (req, res, next) => {
     for(let i=0; i<result.rows.length; i++){
       res.locals.companies.push(result.rows[i].names)
     }
-    console.log('result:', res.locals.companies)
+ 
+    return next();
+  }); 
+};
+
+questionController.getCompaniesQuestions = (req, res, next) => {
+
+  const getCompaniesQuestions = 'SELECT n2.names, n2.questions FROM (SELECT n.*, common_questions.questions FROM (SELECT  companies.names, qc.questionid FROM companies INNER JOIN questions_in_companies qc ON companies.id = companyid) n INNER JOIN common_questions ON n.questionid = common_questions.id) n2 ';
+
+  db.query(getCompaniesQuestions, (err, result)=>{
+    if(err) return next(err);
+    res.locals.companiesQuestions= {};
+    for(let i=0; i<result.rows.length; i++){
+      if(res.locals.companiesQuestions[result.rows[i].names]){
+      res.locals.companiesQuestions[result.rows[i].names].push(result.rows[i].questions)
+    }
+      else{
+        res.locals.companiesQuestions[result.rows[i].names] =[result.rows[i].questions];
+      }
+    }
+    console.log('result:', res.locals.companiesQuestions)
     return next();
   }); 
 };
