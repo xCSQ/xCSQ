@@ -24,7 +24,7 @@
       <label style='margin: 5px;'>Insert Username: </label>
       <input id="user" style='width:65%; margin:5px' placeholder="username">
     <ul id="messages"></ul>
-    <form action="">
+    <form id="apple" action="">
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
     </div>
@@ -34,7 +34,7 @@
     <script>
       $(function () {
         var socket = io();
-        $('form').submit(function(e){
+        $('#apple').submit(function(e){
           e.preventDefault(); // prevents page reloading
           socket.emit('chat message', `${$('#user').val()}: ${$('#m').val()}`);
           $('#m').val('');
