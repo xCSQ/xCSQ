@@ -55,7 +55,6 @@ questionController.getCompaniesQuestions = (req, res, next) => {
         res.locals.companiesQuestions[result.rows[i].names] =[result.rows[i].questions];
       }
     }
-    console.log('result:', res.locals.companiesQuestions)
     return next();
   }); 
 };
