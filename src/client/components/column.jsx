@@ -38,7 +38,8 @@ class Column extends Component {
     }
     console.log('in column component - this.props:', this.props)
       for (let i = 0; i < arrayInState.length; i += 1) {
-        relevantCards.push(<Card input={arrayInState[i]} inArray key={`card${i}`} />);
+        let key = 'card' +i;
+        relevantCards.push(<Card input={arrayInState[i]} inArray key={key} />);
     }
     return (
       <Droppable>

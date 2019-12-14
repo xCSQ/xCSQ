@@ -3,7 +3,7 @@ import { submitInfoActionCreator } from '../actions/actions';
 import Draggable from './dnd/Draggable';
 
 class Card extends Component {
-  constructor(props, { isDragging, text }) {
+  constructor(props) {
     super(props);
     this.state = {
 

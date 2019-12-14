@@ -28,13 +28,14 @@ class Board extends Component {
     this.addCompany = this.addCompany.bind(this)
   }
   componentDidMount(){
+      let newThis = this;
         let promise = new Promise (function(resolve,reject){
           fetch('/data/names').then(data => data.json()).then(result =>{ 
             for(let i=0; i<result.companies.length; i++){
                 store.dispatch(actions.initializeColumns(result.companies[i]));
                 store.dispatch(actions.getCompaniesQuestions(result.companiesQuestions))
             } 
-             this.setState({change:false}) 
+             newThis.setState({change:false}) 
           })
         })
   } 

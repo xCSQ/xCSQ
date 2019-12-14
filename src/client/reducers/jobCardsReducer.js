@@ -32,9 +32,10 @@ const questionCardsReducer = (state = initialState, action) => {
       submittedCard = {
         // removed company and swaped for question
         question: action.payload.question,
-        editable: false,
+        // editable: false,
       };
-      stateCopy.question.unshift(submittedCard);
+      stateCopy.question.unshift(action.payload.question);
+      //stateCopy.question.unshift(submittedCard);
       stateCopy.newCard = false;
 
       fetch('/', {
