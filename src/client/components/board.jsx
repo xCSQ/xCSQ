@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Column from './column.jsx';
 import AddCardButton from './addCardButton';
 import * as actions from '../actions/actions';
+import store from '../store';
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchNewCard: () => dispatch(actions.newCardActionCreator()),
@@ -27,20 +28,18 @@ class Board extends Component {
     this.addCompany = this.addCompany.bind(this)
   }
   componentDidMount(){
-    let newThis=this;
-    const promise = new Promise (function(resolve,reject){
-      fetch('/data/names').then(data => data.json()).then(result =>{ 
-        for(let i=0; i<result.companies.length; i++){
-          newThis.props.dispatchGetColumns(result.companies[i])
-        } 
-        newThis.setState({change:false})
-        const promise2 = new Promise(function(resolve, reject){
-            newThis.props.dispatchGetCompaniesQuestions(result.companiesQuestions)
-            newThis.setState({change:false})
+      let newThis = this;
+        let promise = new Promise (function(resolve,reject){
+          fetch('/data/names').then(data => data.json()).then(result =>{ 
+            for(let i=0; i<result.companies.length; i++){
+                store.dispatch(actions.initializeColumns(result.companies[i]));
+                store.dispatch(actions.getCompaniesQuestions(result.companiesQuestions))
+            } 
+             newThis.setState({change:false}) 
+          })
         })
-    })
-    })
-  }
+  } 
+
   addCompany(){
     let companyName= document.querySelector('#newComp').value.toUpperCase()
     this.props.dispatchNewColumn(companyName)
@@ -48,7 +47,6 @@ class Board extends Component {
   }
 
   render() {
-    // const columnHeaders = ['Common Questions'];
     const stateProperties = ['question'];
     stateProperties.push(...this.props.columns.slice(1));
     const displayColumn = [];

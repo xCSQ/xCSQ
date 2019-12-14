@@ -32,14 +32,15 @@ class Card extends Component {
               // margin: '10px',
               width: '140px',
               height: '80px',
-              border: '5px light black',
+              border: '5px solid blue',
               borderStyle: 'groove',
               textAlign: 'center',
+              background: 'grey',
             }}
           >
             <input id="question" type="text" placeholder="Question" />
             <br />
-            <button
+            <button style={{width:'auto'}}
               type="button"
               onClick={() => this.props.dispatchSubmitInfo(
                 document.getElementById('question').value,
